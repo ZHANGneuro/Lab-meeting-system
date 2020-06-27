@@ -1,0 +1,204 @@
+
+<html>
+
+
+
+<style>
+div.brand {
+  position: relative;
+  text-align: center;
+  top:20px;
+  font-size: 2em;
+}
+div.brand a {
+  text-decoration: none;
+  color:black;
+}
+div.navigator {
+  position: relative;
+  top:40px;
+  color:black;
+}
+div.navigator nav li a{
+  color:black;
+  font-size: 1.2em;
+}
+.dropdown-menu .sub-menu {
+  left: 100%;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  margin-top: -1px;
+}
+.dropdown-menu li:hover .sub-menu {
+  visibility: visible;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+#home_area:hover{
+  text-decoration: underline;
+}
+#research_area:hover{
+  text-decoration: underline;
+}
+#people_area:hover{
+  text-decoration: underline;
+}
+#pub_area:hover{
+  text-decoration: underline;
+}
+#login_area:hover{
+  text-decoration: underline;
+}
+#pending_list_area:hover{
+  text-decoration: underline;
+}
+.dropdown-item:hover{
+  text-decoration: underline;
+}
+
+
+#footer {
+  position:fixed;
+  bottom: 0%;
+  width: 100%;
+  text-align: center;
+  right: 0;
+  left: 0;
+  width:100%;
+  height:auto;
+  background: white;
+  z-index: 1000;
+}
+hr {
+  height: 2px;
+  border: 0;
+  clear:both;
+  display:block;
+  background-color:#8B8E87;
+}
+
+
+
+
+
+</style>
+
+
+<script
+src="https://code.jquery.com/jquery-3.3.1.js"
+integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+crossorigin="anonymous">
+</script>
+
+<script>
+if (sessionStorage.getItem('login_status') == 'in'){
+  document.getElementById("login_area").innerHTML = '<li class="nav-item"><a id="click_loginout" class="nav-link" href="./">Log out</a></li>';
+} else if (sessionStorage.getItem('login_status') == 'out') {
+  document.getElementById("login_area").innerHTML = '<li class="nav-item"><a id="click_login" class="nav-link" href="login_template.html">Login</a></li>';
+} else{
+  document.getElementById("login_area").innerHTML = '<li class="nav-item"><a id="click_login" class="nav-link" href="login_template.html">Login</a></li>';
+}
+
+if (sessionStorage.getItem('login_status') == 'in'){
+  document.getElementById("lmr_area").style = "display: visible;";
+} else{
+  document.getElementById("lmr_area").style = "display: none;";
+}
+
+if (sessionStorage.getItem('perm') == 'admin'){
+  document.getElementById("pending_list_area").style = "display: visible;";
+} else{
+  document.getElementById("pending_list_area").style = "display: none;";
+}
+</script>
+
+
+
+
+<body>
+
+  <div class="brand">
+    <a href="./"><font face="Arial" size="6">*** lab</font></a>
+  </div>
+
+  <div class="navigator">
+    <nav class="nav nav-pills justify-content-center" style="background-color: #e3f2fd;">
+
+      <div id="home_area">
+        <li class="nav-item">
+          <a class="nav-link" href="./">Home</a>
+        </li>
+      </div>
+
+      <div id="research_area">
+        <li class="nav-item">
+          <a class="nav-link" href="research_template.html">Research</a>
+        </li>
+      </div>
+
+      <div id="people_area">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">People</a>
+          <ul class="dropdown-menu">
+            <a class="dropdown-item" href="profile_pi">PI</a>
+            <a class="dropdown-item" href="profile_student.php">Students</a>
+          </ul>
+        </li>
+      </div>
+
+      <div id="pub_area">
+        <li class="nav-item">
+          <a class="nav-link" href="publication_template.html">Publication</a>
+        </li>
+      </div>
+
+      <div id="lmr_area" style="display: none;">
+        <li class="nav-item">
+          <a class="nav-link" href="lab_meeting_records_mainpage.php">Lab meeting</a>
+        </li>
+      </div>
+
+      <div id="pending_list_area" style="display: none;">
+        <li class="nav-item">
+          <a class="nav-link" href="pending_list.php">Pending List</a>
+        </li>
+      </div>
+
+      <div id="login_area">
+        <li class="nav-item">
+          <a class="nav-link" href="login_template.html">Login</a>
+        </li>
+      </div>
+
+
+    </nav>
+  </div>
+
+
+
+  <div id="footer">
+    <hr>
+    <p>Room 1707, WangKeZhen building, Peking University, HaiDian road No.52, HaiDian district, Beijing</p>
+  </div>
+
+
+
+  <script type="text/javascript">
+  $(document).ready(function($) {
+    $('#click_loginout').on( 'click', function (e) {
+      sessionStorage.setItem('login_status','out') ;
+      sessionStorage.setItem('user_identity','normal') ;
+    });
+  });
+
+
+</script>
+</body>
+
+
+
+
+</html>

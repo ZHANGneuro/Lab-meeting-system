@@ -1,0 +1,171 @@
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="/js_library/jquery-3.3.1.js"></script>
+  <script src="/bootstrap/js/bootstrap.min.js" ></script>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <title>*** lab</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+</head>
+
+
+
+<style>
+
+#feedback {
+  width: 300px;
+  /* height: 30px; */
+  margin: 5% auto auto auto;
+}
+
+#background {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 340px;
+  height:350px;
+  margin: 0% auto auto auto;
+  display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;  /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+  justify-content: center;
+  text-align: center;
+}
+
+
+#input_email {
+  width: 250px;
+  margin: 15% auto auto auto;
+}
+
+#psw {
+  width: 250px;
+  margin: 0% auto auto auto;
+}
+
+#btn_signin {
+  width: 100px;
+  margin: 0% auto auto auto;
+}
+
+#create_account {
+  margin: 15% auto auto auto;
+}
+
+#Reset_password{
+  margin: 5% auto auto auto;
+}
+</style>
+
+
+<body>
+<div class="form-group text-center" id="feedback" style="color:red"></div>
+
+<div id="background" class="shadow-lg p-3 mb-5 bg-white rounded">
+  <form method="post" class="login-form">
+
+    <div class="form-group text-center">
+      <input type="text" class="form-control" id="input_email" placeholder="email address">
+    </div>
+
+    <div class="form-group text-center">
+      <input type="password" class="form-control" id="psw" placeholder="password">
+    </div>
+
+    <div class="form-group text-center">
+      <button type="submit" id="btn_signin" class="btn btn-outline-secondary">Sign in</button>
+    </div>
+
+    <div id="create_account" class="form-group text-center">
+      <button type="button" id="btn_register" class="btn btn-light">Create an account</button>
+    </div>
+
+    <div id="Reset_password" class="form-group text-center">
+      <button type="button" id="btn_resetPwd" class="btn btn-light">Reset password</button>
+    </div>
+  </form>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+$(document).ready(function($) {
+
+  $('#btn_signin').on( 'click', function (e) {
+    e.preventDefault();
+    var email_addre = document.getElementById('input_email').value;
+    var psw = document.getElementById('psw').value;
+
+
+
+    $.ajax({
+      type: "POST",
+      url: "login_function.php",
+      data: {
+        pass_email_addre : email_addre,
+        pass_password : psw
+      },
+      success: function(data) {
+        // var returned = $.trim(data);
+        // console.log(data);
+        var returned = $.parseJSON(data);
+
+        var perm = returned[0];
+        var login_status = returned[1];
+        var user_id = returned[2];
+        var user_identity = returned[3];
+        var member_name = returned[4];
+
+
+
+        if (login_status=="passed") {
+          document.getElementById("feedback").innerHTML = "";
+          sessionStorage.setItem('login_status','in');
+          sessionStorage.setItem('current_user',email_addre);
+          sessionStorage.setItem('user_id',user_id);
+          sessionStorage.setItem('user_identity',user_identity);
+          sessionStorage.setItem('member_name',member_name);
+          if (perm=="admin") {
+            sessionStorage.setItem('perm','admin');
+          } else {
+            sessionStorage.setItem('perm','member');
+          }
+          window.location.href = 'index.php';
+        }else if (login_status=="pending") {
+          document.getElementById("feedback").innerHTML = "your registration has not been confirmed by admin";
+        }
+        else {
+          document.getElementById("feedback").innerHTML = "invalid email address or password, contact Bo";
+        }
+      }
+    });
+  });
+
+
+  $('#btn_register').on( 'click', function (e) {
+    e.preventDefault();
+    window.location.href = './register_template.php';
+  });
+
+  $('#btn_resetPwd').on( 'click', function (e) {
+    e.preventDefault();
+    window.location.href = './reset_pwd_template.php';
+  });
+
+});
+
+</script>
+
+
+
+
+
+
+
+
+</html>

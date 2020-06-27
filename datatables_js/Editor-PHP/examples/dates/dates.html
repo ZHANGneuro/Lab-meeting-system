@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.17/css/jquery.dataTables.min.css">
+
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.17/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" language="javascript" src="../../js/dataTables.editor.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/editor.dataTables.min.css">
+
+
+
+
+	<script type="text/javascript">
+
+var editor; // use a global for the submit and return data rendering in the examples
+
+$(document).ready(function() {
+	editor = new $.fn.dataTable.Editor( {
+		ajax: '../php/dates.php',
+		table: '#example',
+		fields: [ {
+				label: 'Last name:',
+				name:  'last_name'
+			}, {
+				label: 'Updated date:',
+				name:  'updated_date',
+				type:  'datetime',
+				def:   function () { return new Date(); }
+			}, {
+				label: 'Registered date:',
+				name:  'registered_date',
+				type:  'datetime',
+				def:   function () { return new Date(); }
+			}
+		]
+	} );
+
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		ajax: '../php/dates.php',
+		columns: [
+			{ data: 'first_name' },
+			{ data: 'last_name' },
+			{ data: 'updated_date' },
+			{ data: 'registered_date' }
+		],
+		buttons: [
+			{ extend: 'create', editor: editor },
+			{ extend: 'edit',   editor: editor },
+			{ extend: 'remove', editor: editor }
+		]
+	} );
+} );
+
+	</script>
+
+
+
+
+	<table id="example" class="stripe" style="width:100%">
+		<thead>
+	<tr>
+			<th>First name</th>
+			<th>Last name</th>
+			<th>Updated date</th>
+			<th>Registered date</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+
+</html>
